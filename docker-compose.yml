@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  web_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8087:80
+
+# networks:
+#   net:
+#     driver: bridge
+#     ipam:
+#       driver: default
+#       config:
+#         - subnet: "172.10.16.0/24"
+#           gateway: "172.10.16.1"

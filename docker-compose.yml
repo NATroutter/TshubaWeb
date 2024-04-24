@@ -7,12 +7,16 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8087:80
+    networks:
+      net:
+        ipv4_address: 172.10.16.2
 
-# networks:
-#   net:
-#     driver: bridge
-#     ipam:
-#       driver: default
-#       config:
-#         - subnet: "172.10.16.0/24"
-#           gateway: "172.10.16.1"
+
+networks:
+  net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.10.16.0/24"
+          gateway: "172.10.16.1"

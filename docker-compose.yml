@@ -3,14 +3,41 @@ version: '3.9'
 services:
   web_server:
     build:
-      context: .
+      context: ./web
       dockerfile: Dockerfile
     ports:
       - 8087:80
     networks:
       net:
         ipv4_address: 172.10.16.2
+    volumes:
+      - ../TshubaWeb_testing:/var/www/main/public_html #Path for development testing website !
+    # depends_on:
+    #   - strapi
 
+    mariadb:
+      platform: linux/amd64 #for platform error on Apple M1 chips
+      restart: unless-stopped
+      env_file: .env
+      image: mariadb:latest
+      environment:
+        MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD_ROOT}
+        MYSQL_USER: ${STRAPI_DATABASE_USERNAME}
+        MYSQL_PASSWORD: ${STRAPI_DATABASE_PASSWORD}
+        MYSQL_DATABASE: ${STRAPI_DATABASE_NAME}
+      volumes:
+        - mariadb-data:/var/lib/mysql
+      networks:
+        net:
+          ipv4_address: 172.10.16.4
+
+volumes:
+  mariadb-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./mariadb-data
 
 networks:
   net:

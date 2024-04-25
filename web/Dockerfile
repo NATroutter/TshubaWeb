@@ -21,7 +21,7 @@ RUN rm -f /etc/nginx/sites-enabled/default
 COPY ./config/vhosts/*.conf /etc/nginx/sites-enabled/
 
 RUN rm -rf /var/www/html/
-COPY --chown=www-data:www-data --chmod=755 ./web/ /var/www/
+COPY --chown=www-data:www-data --chmod=755 ./hosts/ /var/www/
 
 COPY ./ssl/ /etc/ssl/
 
